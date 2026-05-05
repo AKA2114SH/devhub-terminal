@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vinxi build --static", 
+    "build": "bun x vinxi build --static", 
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
