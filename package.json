@@ -3,13 +3,13 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
- "scripts": {
-  "dev": "vite dev",
-  "build": "bun x vinxi build --static",
-  "preview": "vite preview",
-  "lint": "eslint .",
-  "format": "prettier --write ."
-},
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "preview": "vinxi preview",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
     "@hookform/resolvers": "^5.2.2",
@@ -67,6 +67,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "vinxi": "^0.5.11",
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^1.4.0",
     "@types/node": "^22.16.5",
