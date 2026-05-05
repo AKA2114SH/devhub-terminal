@@ -53,9 +53,9 @@ export const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: {},
-    // Clean URLs: Vercel supports Browser History natively
+    // Reverting to Browser History for clean URLs on Vercel
     history: createBrowserHistory(),
-    // Vercel serves from the root domain, so basepath is just '/'
+    // Vercel serves from root, so basepath must be '/'
     basepath: '/',
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
