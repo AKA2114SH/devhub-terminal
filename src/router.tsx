@@ -27,11 +27,6 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
         <p className="mt-2 text-sm text-muted-foreground">
           An unexpected error occurred. Please try again.
         </p>
-        {import.meta.env.DEV && error.message && (
-          <pre className="mt-4 max-h-40 overflow-auto rounded-md bg-muted p-3 text-left font-mono text-xs text-destructive">
-            {error.message}
-          </pre>
-        )}
         <div className="mt-6 flex items-center justify-center gap-3">
           <button
             onClick={() => {
@@ -58,9 +53,9 @@ export const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: {},
-    // Reverting to Browser History for clean URLs (no /#/ needed on Vercel)
+    // Clean URLs: Vercel supports Browser History natively
     history: createBrowserHistory(),
-    // Set basepath to '/' because Vercel hosts from the root
+    // Vercel serves from the root domain, so basepath is just '/'
     basepath: '/',
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
