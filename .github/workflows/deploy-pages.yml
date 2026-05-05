@@ -29,23 +29,34 @@ jobs:
 
       - name: Build
         env:
-          # This ensures the build process uses the subfolder path
+          # This matches your repository name for asset pathing
           BASE_PATH: "/devhub-terminal/"
+          VITE_BASE_PATH: "/devhub-terminal/"
         run: bun run build
 
-      - name: Add SPA 404 fallback
+      - name: Prepare Static Files for GitHub Pages
         run: |
-          # Since you use Hash History, 404.html is a safety net.
-          # It must be a direct copy of index.html to avoid refresh loops.
-          if [ -f dist/client/index.html ]; then
-            cp dist/client/index.html dist/client/404.html
-            touch dist/client/.nojekyll
+          # 1. TanStack Start puts static files in dist/client. 
+          # We need them in the root of dist for GitHub Pages to see them.
+          if [ -d dist/client ]; then
+            echo "Relocating client files to root..."
+            cp -r dist/client/* dist/
           fi
+          
+          # 2. Create the 404.html from index.html to handle SPA routing.
+          # We use 'cp' instead of a redirect script to avoid infinite loops.
+          if [ -f dist/index.html ]; then
+            cp dist/index.html dist/404.html
+          fi
+          
+          # 3. Bypass Jekyll processing (crucial for folders starting with underscores)
+          touch dist/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/client
+          # Upload the flattened dist folder
+          path: ./dist
 
   deploy:
     needs: build
