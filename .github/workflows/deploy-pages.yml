@@ -29,20 +29,25 @@ jobs:
 
       - name: Build
         env:
-          # If deploying to https://<user>.github.io/<repo>/, set BASE_PATH to "/<repo>/"
+          # BASE_PATH should be set to "/devhub-terminal/" in your GitHub Repository Variables
           BASE_PATH: ${{ vars.BASE_PATH || '/' }}
         run: bun run build
 
       - name: Add SPA 404 fallback
         run: |
-          if [ -f dist/index.html ]; then
-            cp dist/index.html dist/404.html
-            touch dist/.nojekyll
+          # Navigate into the client directory where the actual HTML lives
+          # Based on your terminal output, this is the correct path for TanStack Start static builds
+          if [ -f dist/client/index.html ]; then
+            cp dist/client/index.html dist/client/404.html
+            touch dist/client/.nojekyll
           fi
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          # This ensures that GitHub Pages serves the contents of the client folder 
+          # directly at your-username.github.io/devhub-terminal/
+          path: ./dist/client
 
   deploy:
     needs: build
