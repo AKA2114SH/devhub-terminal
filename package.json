@@ -3,9 +3,9 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
- "scripts": {
+"scripts": {
   "dev": "vinxi dev",
-  "build": "vinxi build --static",
+  "build": "vinxi build",
   "start": "vinxi start",
   "lint": "eslint .",
   "format": "prettier --write ."
