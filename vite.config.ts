@@ -1,13 +1,17 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, cloudflare (build-only),
-//     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
-//     error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   vite: {
+    // This ensures the app looks for assets in the subfolder /devhub-terminal/
     base: "/devhub-terminal/",
+    build: {
+      // Ensures the build output is clean for GitHub Pages
+      outDir: "dist",
+    },
+    server: {
+      // Local development remains at root, but build uses the base path
+      host: "0.0.0.0",
+      port: 8080,
+    }
   },
 });
